@@ -6,6 +6,7 @@ import { TestDbComponent } from "./test-db.component";
 import { OrgTestComponent } from './org-test/org-test';
 import { MembersTestComponent } from './members-test/members-test';
 import { MembersListComponent } from './members-list/members-list';
+import { OrgListComponent } from './org-list/org-list';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { MembersListComponent } from './members-list/members-list';
     TestDbComponent, 
     OrgTestComponent, 
     MembersTestComponent, 
-    MembersListComponent
+    MembersListComponent,
+    OrgListComponent
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
