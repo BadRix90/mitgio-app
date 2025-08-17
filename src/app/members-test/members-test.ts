@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Firestore, collection, addDoc, serverTimestamp } from '@angular/fire/firestore';
 import { OrgStore } from '../org-store.service';
+import { MaterialModule } from '../material.module';
 
 @Component({
   selector: 'app-members-test',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MaterialModule],
   template: `
     <button (click)="addMember()" [disabled]="!orgId">Neues Mitglied anlegen</button>
     <p *ngIf="!orgId">Bitte erst eine Organisation wählen.</p>

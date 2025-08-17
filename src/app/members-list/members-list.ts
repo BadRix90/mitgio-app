@@ -4,11 +4,12 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable, of, switchMap } from 'rxjs';
 import { OrgStore } from '../org-store.service';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { MaterialModule } from '../material.module';
 
 @Component({
   selector: 'app-members-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MaterialModule],
   template: `
     <h3>Mitgliederübersicht</h3>
     <p *ngIf="!(store.selectedOrgId()); else list">Bitte erst eine Organisation wählen.</p>
