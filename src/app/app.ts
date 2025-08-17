@@ -1,12 +1,26 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { Firestore, collection, addDoc, serverTimestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss'],
 })
 export class App {
-  protected readonly title = signal('mitgio-app');
+  private fs = inject(Firestore);
+  pingMessage = '';
+
+  async ping() {
+    try {
+      const ref = collection(this.fs, 'dev-pings');
+      const doc = await addDoc(ref, { at: serverTimestamp(), note: 'hello from mitgio' });
+      this.pingMessage = `OK: ${doc.id}`;
+    } catch (e: any) {
+      this.pingMessage = `Fehler: ${e?.message || e}`;
+    }
+  }
 }
