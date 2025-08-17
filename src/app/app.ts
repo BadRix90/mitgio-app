@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { Firestore, collection, addDoc, serverTimestamp } from '@angular/fire/firestore';
+import { TestDbComponent } from "./test-db.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, TestDbComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
 })
