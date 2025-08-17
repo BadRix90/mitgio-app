@@ -1,3 +1,4 @@
+// src/app/auth/auth.service.ts
 import { Injectable, inject, signal } from '@angular/core';
 import { 
   Auth, 
@@ -65,9 +66,11 @@ export class AuthService {
   // Login
   async login(email: string, password: string): Promise<{ success: boolean; error?: string }> {
     try {
+      console.log('Login attempt for:', email); // DEBUG
       await signInWithEmailAndPassword(this.auth, email, password);
       return { success: true };
     } catch (error: any) {
+      console.error('Login error:', error); // DEBUG
       return { 
         success: false, 
         error: this.getErrorMessage(error.code) 
@@ -135,7 +138,16 @@ export class AuthService {
       const docSnap = await getDoc(docRef);
       
       if (docSnap.exists()) {
-        this.userProfile.set(docSnap.data() as UserProfile);
+        const profile = docSnap.data() as UserProfile;
+        this.userProfile.set(profile);
+        
+        // Automatically select first organization
+        if (profile.orgIds && profile.orgIds.length > 0) {
+          // Import OrgStore dynamically to avoid circular dependency
+          const { OrgStore } = await import('../org-store.service');
+          const orgStore = new OrgStore();
+          orgStore.select(profile.orgIds[0]);
+        }
       }
     } catch (error) {
       console.error('Error loading user profile:', error);
@@ -144,6 +156,7 @@ export class AuthService {
 
   // Error Messages auf Deutsch
   private getErrorMessage(code: string): string {
+    console.error('Firebase Auth Error Code:', code); // DEBUG
     switch (code) {
       case 'auth/user-not-found':
         return 'Benutzer nicht gefunden';
@@ -155,8 +168,12 @@ export class AuthService {
         return 'Passwort zu schwach (mindestens 6 Zeichen)';
       case 'auth/invalid-email':
         return 'Ungültige E-Mail-Adresse';
+      case 'auth/operation-not-allowed':
+        return 'Email/Passwort Anmeldung ist nicht aktiviert';
+      case 'auth/too-many-requests':
+        return 'Zu viele Anfragen. Bitte später versuchen';
       default:
-        return 'Unbekannter Fehler aufgetreten';
+        return `Unbekannter Fehler: ${code}`;
     }
   }
 }

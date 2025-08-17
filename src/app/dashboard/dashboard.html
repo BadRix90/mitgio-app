@@ -2,7 +2,10 @@
 <mat-toolbar color="primary" class="dashboard-header">
   <span class="logo">Mitgio</span>
   <span class="spacer"></span>
-  <span class="welcome-message">{{ welcomeMessage() }}</span>
+  <span class="welcome-message">
+    {{ welcomeMessage() }}
+    <small *ngIf="organizationInfo()">{{ organizationInfo() }}</small>
+  </span>
   <button mat-icon-button [matMenuTriggerFor]="userMenu">
     <mat-icon>account_circle</mat-icon>
   </button>
@@ -111,28 +114,26 @@
     </div>
   </div>
 
-  <!-- Recent Activity (placeholder) -->
+  <!-- Recent Activity -->
   <div class="activity-section">
-    <h2>Letzte Aktivitäten</h2>
+    <div class="activity-header">
+      <h2>Letzte Aktivitäten</h2>
+      <button mat-icon-button (click)="refreshData()" title="Aktualisieren">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
     <mat-card>
       <mat-card-content>
-        <mat-list>
-          <mat-list-item>
-            <mat-icon matListItemIcon>person_add</mat-icon>
-            <div matListItemTitle>Max Mustermann wurde hinzugefügt</div>
-            <div matListItemLine>vor 2 Stunden</div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListItemIcon>payment</mat-icon>
-            <div matListItemTitle>Beitrag von Anna Schmidt eingegangen</div>
-            <div matListItemLine>gestern</div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListItemIcon>email</mat-icon>
-            <div matListItemTitle>5 Erinnerungen versendet</div>
-            <div matListItemLine>vor 3 Tagen</div>
+        <mat-list *ngIf="recentActivities().length > 0; else noActivities">
+          <mat-list-item *ngFor="let activity of recentActivities()">
+            <mat-icon matListItemIcon>{{ activity.icon }}</mat-icon>
+            <div matListItemTitle>{{ activity.description }}</div>
+            <div matListItemLine>{{ activity.timestamp | date:'short':'de' }}</div>
           </mat-list-item>
         </mat-list>
+        <ng-template #noActivities>
+          <p class="no-activities">Noch keine Aktivitäten vorhanden.</p>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>

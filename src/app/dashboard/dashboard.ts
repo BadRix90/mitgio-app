@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MaterialModule } from '../material.module';
 import { AuthService } from '../auth/auth.service';
 import { OrgStore } from '../org-store.service';
+import { DashboardDataService } from './dashboard-data';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +16,7 @@ import { OrgStore } from '../org-store.service';
 export class DashboardComponent {
   private authService = inject(AuthService);
   private orgStore = inject(OrgStore);
+  private dashboardData = inject(DashboardDataService);
   private router = inject(Router);
 
   // Current user and organization
@@ -22,15 +24,10 @@ export class DashboardComponent {
   readonly userProfile = this.authService.userProfile;
   readonly selectedOrgId = this.orgStore.selectedOrgId;
 
-  // Dashboard stats (mock data for now)
-  readonly stats = signal({
-    totalMembers: 45,
-    activeMembers: 42,
-    pendingPayments: 8,
-    overduePayments: 3,
-    totalRevenue: 2840,
-    monthlyFees: 1850
-  });
+  // Real data from service
+  readonly stats = this.dashboardData.stats;
+  readonly recentActivities = this.dashboardData.recentActivities;
+  readonly members = this.dashboardData.members;
 
   // Welcome message
   readonly welcomeMessage = computed(() => {
@@ -39,6 +36,16 @@ export class DashboardComponent {
       return `Willkommen zurück, ${user.firstName}!`;
     }
     return 'Willkommen bei Mitgio!';
+  });
+
+  // Organization info
+  readonly organizationInfo = computed(() => {
+    const user = this.userProfile();
+    const memberCount = this.members().length;
+    if (user && user.orgIds.length > 0) {
+      return `${memberCount} Mitglieder`;
+    }
+    return '';
   });
 
   // Quick action methods
@@ -65,6 +72,10 @@ export class DashboardComponent {
   sendReminders() {
     // TODO: Send payment reminders
     console.log('Send reminders clicked');
+  }
+
+  refreshData() {
+    this.dashboardData.refreshData();
   }
 
   async logout() {
