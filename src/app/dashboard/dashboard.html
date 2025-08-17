@@ -1,0 +1,140 @@
+<!-- Dashboard Header -->
+<mat-toolbar color="primary" class="dashboard-header">
+  <span class="logo">Mitgio</span>
+  <span class="spacer"></span>
+  <span class="welcome-message">{{ welcomeMessage() }}</span>
+  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Einstellungen</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Abmelden</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<!-- Dashboard Content -->
+<div class="dashboard-container">
+  
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <mat-card class="stat-card members">
+      <mat-card-content>
+        <div class="stat-content">
+          <div class="stat-info">
+            <h3>{{ stats().totalMembers }}</h3>
+            <p>Mitglieder gesamt</p>
+            <small>{{ stats().activeMembers }} aktiv</small>
+          </div>
+          <mat-icon class="stat-icon">people</mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card payments">
+      <mat-card-content>
+        <div class="stat-content">
+          <div class="stat-info">
+            <h3>{{ stats().pendingPayments }}</h3>
+            <p>Offene Beiträge</p>
+            <small>{{ stats().overduePayments }} überfällig</small>
+          </div>
+          <mat-icon class="stat-icon">payment</mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card revenue">
+      <mat-card-content>
+        <div class="stat-content">
+          <div class="stat-info">
+            <h3>{{ stats().totalRevenue }}€</h3>
+            <p>Gesamteinnahmen</p>
+            <small>{{ stats().monthlyFees }}€ diesen Monat</small>
+          </div>
+          <mat-icon class="stat-icon">euro</mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="actions-section">
+    <h2>Schnellzugriff</h2>
+    <div class="actions-grid">
+      
+      <mat-card class="action-card" (click)="addMember()">
+        <mat-card-content>
+          <mat-icon>person_add</mat-icon>
+          <h3>Neues Mitglied</h3>
+          <p>Mitglied hinzufügen</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="action-card" (click)="viewMembers()">
+        <mat-card-content>
+          <mat-icon>people</mat-icon>
+          <h3>Mitgliederliste</h3>
+          <p>Alle Mitglieder anzeigen</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="action-card" (click)="managePayments()">
+        <mat-card-content>
+          <mat-icon>payment</mat-icon>
+          <h3>Beiträge verwalten</h3>
+          <p>Zahlungen und Mahnungen</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="action-card" (click)="exportData()">
+        <mat-card-content>
+          <mat-icon>download</mat-icon>
+          <h3>Export</h3>
+          <p>CSV/Excel Download</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="action-card" (click)="sendReminders()">
+        <mat-card-content>
+          <mat-icon>email</mat-icon>
+          <h3>Erinnerungen</h3>
+          <p>Mahnungen versenden</p>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+
+  <!-- Recent Activity (placeholder) -->
+  <div class="activity-section">
+    <h2>Letzte Aktivitäten</h2>
+    <mat-card>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon>person_add</mat-icon>
+            <div matListItemTitle>Max Mustermann wurde hinzugefügt</div>
+            <div matListItemLine>vor 2 Stunden</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>payment</mat-icon>
+            <div matListItemTitle>Beitrag von Anna Schmidt eingegangen</div>
+            <div matListItemLine>gestern</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>email</mat-icon>
+            <div matListItemTitle>5 Erinnerungen versendet</div>
+            <div matListItemLine>vor 3 Tagen</div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

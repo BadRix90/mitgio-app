@@ -12,6 +12,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 
+// Dashboard modules
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+
 @NgModule({
   exports: [
     // Existing
@@ -24,7 +28,11 @@ import { MatDividerModule } from '@angular/material/divider';
     MatInputModule,
     MatIconModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    
+    // Dashboard
+    MatToolbarModule,
+    MatMenuModule
   ]
 })
 export class MaterialModule {}
