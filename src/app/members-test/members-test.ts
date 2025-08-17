@@ -9,8 +9,7 @@ import { MaterialModule } from '../material.module';
   standalone: true,
   imports: [CommonModule, MaterialModule],
   template: `
-    <button (click)="addMember()" [disabled]="!orgId">Neues Mitglied anlegen</button>
-    <p *ngIf="!orgId">Bitte erst eine Organisation wählen.</p>
+    <button mat-raised-button color="primary" (click)="addMember()">Neues Mitglied anlegen</button>
     <p>{{ msg }}</p>
   `,
 })

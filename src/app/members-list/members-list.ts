@@ -12,17 +12,11 @@ import { MaterialModule } from '../material.module';
   imports: [CommonModule, MaterialModule],
   template: `
     <h3>Mitgliederübersicht</h3>
-    <p *ngIf="!(store.selectedOrgId()); else list">Bitte erst eine Organisation wählen.</p>
-
-    <ng-template #list>
-      <ul>
-        <li *ngFor="let m of members$ | async">
-          {{ m.firstName || '' }} {{ m.lastName || '' }}
-          <span *ngIf="m.name && !m.firstName">{{ m.name }}</span>
-          <span *ngIf="m.email"> ({{ m.email }})</span>
-        </li>
-      </ul>
-    </ng-template>
+    <mat-list>
+      <mat-list-item *ngFor="let m of members$ | async">
+        {{ m.firstName }} {{ m.lastName }} ({{ m.email }})
+      </mat-list-item>
+    </mat-list>
   `,
 })
 export class MembersListComponent {
