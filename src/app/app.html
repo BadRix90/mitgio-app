@@ -1,14 +1,12 @@
-<h1>Mitgio (MVP)</h1>
-
-<button (click)="ping()">Ping Firestore</button>
-<p>{{ pingMessage }}</p>
-
-<app-test-db></app-test-db>
-<app-org-test></app-org-test>
-<app-members-test></app-members-test>
-<app-members-list></app-members-list>
-<app-org-list></app-org-list>
-
-
+<div style="border-bottom: 2px solid #ccc; padding-bottom: 20px; margin-bottom: 20px;">
+    <h1>Mitgio (MVP) - Dev Tools</h1>
+    <button (click)="ping()">Ping Firestore</button>
+    <p>{{ pingMessage }}</p>
+    <app-test-db></app-test-db>
+    <app-org-test></app-org-test>
+    <app-members-test></app-members-test>
+    <app-members-list></app-members-list>
+    <app-org-list></app-org-list>
+</div>
 
 <router-outlet></router-outlet>

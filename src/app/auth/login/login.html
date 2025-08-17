@@ -1,0 +1,67 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header class="logo-section">
+      <mat-card-title>Mitgio</mat-card-title>
+      <mat-card-subtitle>Mitgliederverwaltung für Vereine</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <h2>Anmelden</h2>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-Mail</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="ihre@email.de">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            E-Mail ist erforderlich
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            Ungültige E-Mail-Adresse
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Passwort -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Passwort</mat-label>
+          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+            <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            Passwort ist erforderlich
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage()" class="error-message mat-error">
+          <mat-icon>error</mat-icon>
+          <span>{{ errorMessage() }}</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          mat-raised-button 
+          color="primary" 
+          type="submit" 
+          class="full-width submit-btn"
+          [disabled]="isLoading() || loginForm.invalid">
+          <mat-icon *ngIf="isLoading()">refresh</mat-icon>
+          {{ isLoading() ? 'Anmeldung läuft...' : 'Anmelden' }}
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="register-actions">
+      <p>Noch kein Verein registriert?</p>
+      <button mat-button color="primary" type="button" (click)="goToRegister()">
+        Verein registrieren
+      </button>
+      <button mat-button type="button" (click)="forgotPassword()">
+        Passwort vergessen?
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
