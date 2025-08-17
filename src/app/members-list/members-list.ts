@@ -12,11 +12,17 @@ import { MaterialModule } from '../material.module';
   imports: [CommonModule, MaterialModule],
   template: `
     <h3>Mitgliederübersicht</h3>
-    <mat-list>
-      <mat-list-item *ngFor="let m of members$ | async">
-        {{ m.firstName }} {{ m.lastName }} ({{ m.email }})
-      </mat-list-item>
-    </mat-list>
+    <p *ngIf="!(store.selectedOrgId()); else list">Bitte erst eine Organisation wählen.</p>
+
+    <ng-template #list>
+      <mat-list>
+        <mat-list-item *ngFor="let m of members$ | async">
+          {{ m.firstName || '' }} {{ m.lastName || '' }}
+          <span *ngIf="m.name && !m.firstName">{{ m.name }}</span>
+          <span *ngIf="m.email"> ({{ m.email }})</span>
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
   `,
 })
 export class MembersListComponent {
@@ -29,7 +35,6 @@ export class MembersListComponent {
     switchMap(orgId => {
       if (!orgId) return of([]);
       const ref = collection(this.fs, `orgs/${orgId}/members`);
-      // bewusst ohne orderBy für weniger Reibung am Anfang
       return collectionData(ref, { idField: 'id' }) as Observable<any[]>;
     })
   );

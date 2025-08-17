@@ -9,14 +9,18 @@ import { MaterialModule } from '../material.module';
   standalone: true,
   imports: [CommonModule, MaterialModule],
   template: `
-    <button mat-raised-button color="primary" (click)="addMember()">Neues Mitglied anlegen</button>
-    <p>{{ msg }}</p>
+    <div style="margin: 12px 0;">
+      <button mat-raised-button color="primary" (click)="addMember()" [disabled]="!orgId">
+        Neues Mitglied anlegen
+      </button>
+      <span style="margin-left:8px" *ngIf="!orgId">Bitte erst eine Organisation wählen.</span>
+      <p>{{ msg }}</p>
+    </div>
   `,
 })
 export class MembersTestComponent {
   private fs = inject(Firestore);
   private store = inject(OrgStore);
-
   get orgId() { return this.store.selectedOrgId(); }
 
   msg = '';
