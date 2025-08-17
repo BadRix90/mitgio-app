@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 
-// New modules for Login
+// Auth & Forms modules
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   exports: [
@@ -16,11 +18,13 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatListModule,
     
-    // For Login & Forms
+    // Auth & Forms
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule {}

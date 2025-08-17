@@ -12,6 +12,10 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'register',
+    loadComponent: () => import('./auth/register/register').then(c => c.RegisterComponent)
+  },
+  {
     path: 'dev',
     loadComponent: () => import('./dev-dashboard/dev-dashboard').then(c => c.DevDashboardComponent)
   },
