@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { OrgStore } from './../org-store..service';
+import { OrgStore } from '../org-store.service';
 
 type Org = { id: string; name?: string; fiscalYearStartMonth?: number };
 
