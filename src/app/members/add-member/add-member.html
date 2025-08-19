@@ -1,0 +1,136 @@
+<div class="add-member-container">
+  
+  <!-- Header -->
+  <div class="add-member-header">
+    <h1>Neues Mitglied hinzufügen</h1>
+    <button mat-button (click)="cancel()">
+      <mat-icon>arrow_back</mat-icon>
+      Zurück zur Liste
+    </button>
+  </div>
+
+  <!-- Form -->
+  <mat-card class="member-form-card">
+    <mat-card-content>
+      <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Personal Information -->
+        <h3>Persönliche Daten</h3>
+        
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Vorname</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="memberForm.get('firstName')?.hasError('required')">
+              Vorname ist erforderlich
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Nachname</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="memberForm.get('lastName')?.hasError('required')">
+              Nachname ist erforderlich
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-Mail</mat-label>
+          <input matInput type="email" formControlName="email">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="memberForm.get('email')?.hasError('required')">
+            E-Mail ist erforderlich
+          </mat-error>
+          <mat-error *ngIf="memberForm.get('email')?.hasError('email')">
+            Ungültige E-Mail-Adresse
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Telefon (optional)</mat-label>
+            <input matInput formControlName="phone">
+            <mat-icon matPrefix>phone</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Geburtsdatum (optional)</mat-label>
+            <input matInput type="date" formControlName="birthDate">
+            <mat-icon matPrefix>cake</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Adresse (optional)</mat-label>
+          <textarea matInput formControlName="address" rows="2"></textarea>
+          <mat-icon matPrefix>location_on</mat-icon>
+        </mat-form-field>
+
+        <!-- Membership Information -->
+        <mat-divider></mat-divider>
+        <h3>Mitgliedschaft</h3>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+                {{ status.label }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>assignment</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Eintrittsdatum</mat-label>
+            <input matInput type="date" formControlName="startDate">
+            <mat-icon matPrefix>event</mat-icon>
+            <mat-error *ngIf="memberForm.get('startDate')?.hasError('required')">
+              Eintrittsdatum ist erforderlich
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Monatsbeitrag (€)</mat-label>
+          <input matInput type="number" formControlName="membershipFee" min="0" step="0.01">
+          <mat-icon matPrefix>euro</mat-icon>
+          <mat-error *ngIf="memberForm.get('membershipFee')?.hasError('min')">
+            Beitrag muss größer oder gleich 0 sein
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Notizen (optional)</mat-label>
+          <textarea matInput formControlName="notes" rows="3"></textarea>
+          <mat-icon matPrefix>note</mat-icon>
+        </mat-form-field>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage()" class="error-message mat-error">
+          <mat-icon>error</mat-icon>
+          <span>{{ errorMessage() }}</span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancel()">
+            Abbrechen
+          </button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit"
+            [disabled]="memberForm.invalid || isLoading()">
+            <mat-icon *ngIf="isLoading()">refresh</mat-icon>
+            {{ isLoading() ? 'Speichere...' : 'Mitglied hinzufügen' }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>
