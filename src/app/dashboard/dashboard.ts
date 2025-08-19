@@ -50,12 +50,12 @@ export class DashboardComponent {
 
   // Quick action methods
   addMember() {
-    console.log('Add member clicked'); // DEBUG
-    this.router.navigate(['/members']);
+    console.log('Add member clicked');
+    this.router.navigate(['/members/add']);
   }
 
   viewMembers() {
-    console.log('View members clicked'); // DEBUG  
+    console.log('View members clicked');
     this.router.navigate(['/members']);
   }
 
