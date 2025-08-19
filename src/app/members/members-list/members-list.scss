@@ -1,0 +1,73 @@
+.members-container {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.members-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0;
+    font-weight: 400;
+  }
+
+  button {
+    gap: 8px;
+  }
+}
+
+.members-card {
+  min-height: 400px;
+}
+
+.no-members {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--mat-sys-on-surface-variant);
+
+  mat-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+
+  h3 {
+    margin: 16px 0 8px 0;
+    font-weight: 400;
+  }
+
+  p {
+    margin-bottom: 24px;
+  }
+}
+
+mat-list-item {
+  padding: 16px 0;
+
+  [matListItemMeta] {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .members-container {
+    padding: 16px;
+  }
+
+  .members-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+
+    button {
+      align-self: center;
+    }
+  }
+}

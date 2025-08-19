@@ -50,13 +50,13 @@ export class DashboardComponent {
 
   // Quick action methods
   addMember() {
-    // TODO: Navigate to add member page
-    console.log('Add member clicked');
+    console.log('Add member clicked'); // DEBUG
+    this.router.navigate(['/members']);
   }
 
   viewMembers() {
-    // TODO: Navigate to members list
-    console.log('View members clicked');
+    console.log('View members clicked'); // DEBUG  
+    this.router.navigate(['/members']);
   }
 
   managePayments() {

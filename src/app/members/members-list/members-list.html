@@ -1,0 +1,52 @@
+<div class="members-container">
+  
+  <!-- Header -->
+  <div class="members-header">
+    <h1>Mitgliederverwaltung</h1>
+    <button mat-raised-button color="primary" (click)="addMember()">
+      <mat-icon>person_add</mat-icon>
+      Neues Mitglied
+    </button>
+  </div>
+
+  <!-- Members List -->
+  <mat-card class="members-card">
+    <mat-card-content>
+      <mat-list *ngIf="members().length > 0; else noMembers">
+        <mat-list-item *ngFor="let member of members()">
+          <div matListItemTitle>
+            {{ member.firstName }} {{ member.lastName }}
+          </div>
+          <div matListItemLine>
+            {{ member.email }}
+          </div>
+          <div matListItemLine>
+            Status: {{ member.status || 'active' }}
+          </div>
+          <div matListItemMeta>
+            <button mat-icon-button (click)="editMember(member)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteMember(member)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+
+      <ng-template #noMembers>
+        <div class="no-members">
+          <mat-icon>people_outline</mat-icon>
+          <h3>Noch keine Mitglieder</h3>
+          <p>Fügen Sie Ihr erstes Mitglied hinzu, um zu beginnen.</p>
+          <button mat-raised-button color="primary" (click)="addMember()">
+            <mat-icon>person_add</mat-icon>
+            Erstes Mitglied hinzufügen
+          </button>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+
+</div>
