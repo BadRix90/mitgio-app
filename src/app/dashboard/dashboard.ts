@@ -51,7 +51,7 @@ export class DashboardComponent {
   // Quick action methods
   addMember() {
     console.log('Add member clicked');
-    this.router.navigate(['/members/add']);
+    this.router.navigate(['/members']);
   }
 
   viewMembers() {
