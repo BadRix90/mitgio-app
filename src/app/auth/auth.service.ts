@@ -1,4 +1,4 @@
-// src/app/auth/auth.service.ts
+// src/app/auth/auth.service.ts - Korrigierte Version
 import { Injectable, inject, signal } from '@angular/core';
 import { 
   Auth, 
@@ -15,6 +15,7 @@ import {
   getDoc,
   serverTimestamp 
 } from '@angular/fire/firestore';
+import { OrgStore } from '../org-store.service'; // Direkt importieren
 
 // Interfaces
 export interface UserProfile {
@@ -42,6 +43,7 @@ export interface OrgData {
 export class AuthService {
   private auth = inject(Auth);
   private fs = inject(Firestore);
+  private orgStore = inject(OrgStore); // Singleton-Instanz verwenden
 
   // Signals für reaktive UI
   readonly currentUser = signal<User | null>(null);
@@ -57,6 +59,7 @@ export class AuthService {
         await this.loadUserProfile(user.uid);
       } else {
         this.userProfile.set(null);
+        this.orgStore.clear(); // Organisation deselektieren beim Logout
       }
       
       this.isLoading.set(false);
@@ -143,10 +146,8 @@ export class AuthService {
         
         // Automatically select first organization
         if (profile.orgIds && profile.orgIds.length > 0) {
-          // Import OrgStore dynamically to avoid circular dependency
-          const { OrgStore } = await import('../org-store.service');
-          const orgStore = new OrgStore();
-          orgStore.select(profile.orgIds[0]);
+          console.log('Selecting organization:', profile.orgIds[0]); // DEBUG
+          this.orgStore.select(profile.orgIds[0]); // Direkte Verwendung der Singleton-Instanz
         }
       }
     } catch (error) {
